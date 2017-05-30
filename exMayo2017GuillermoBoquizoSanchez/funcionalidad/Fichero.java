@@ -23,17 +23,15 @@ public class Fichero implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private static String readUTF;
-	private static LocalDate readObject;
-	public static General general;
-
 	public static void escribir(LocalDate localDate, File file) throws ErrorAlGuardarException {
 		file = annadirExtension(file);
 
 		try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(
 				new BufferedOutputStream(new FileOutputStream(file)))) {
+			
 			objectOutputStream.writeObject(localDate);
 			objectOutputStream.writeUTF(Datos.GUILLERMO_BOQUIZO_SANCHEZ);
+			
 		} catch (IOException e) {
 			throw new ErrorAlGuardarException("Error al guardar del fichero.");
 		}
@@ -49,11 +47,13 @@ public class Fichero implements Serializable {
 	 *             Error de lectura en el fichero
 	 */
 	public static Datos leer(File file) throws ErrorAlLeerException {
-
+		
 		try (ObjectInputStream objectInputStream = new ObjectInputStream(
 				new BufferedInputStream(new FileInputStream(file)))) {
-			readObject = (LocalDate) objectInputStream.readObject();
-			readUTF = objectInputStream.readUTF();
+			
+			LocalDate readObject = (LocalDate) objectInputStream.readObject();
+			String readUTF = objectInputStream.readUTF();
+			
 			return new Datos(readObject, readUTF);
 		} catch (IOException | ClassNotFoundException e) {
 			throw new ErrorAlLeerException("Error al leer el fichero.");
@@ -69,6 +69,7 @@ public class Fichero implements Serializable {
 	private static File annadirExtension(File file) {
 
 		String path = file.getPath();
+		
 		if (!path.endsWith(".fec"))
 			return new File(path + ".fec");
 		return file;

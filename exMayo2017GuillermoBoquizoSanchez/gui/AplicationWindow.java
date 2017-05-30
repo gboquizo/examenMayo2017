@@ -32,7 +32,6 @@ import java.awt.event.WindowEvent;
  *
  */
 public class AplicationWindow {
-	private static final LocalDate FECHA_ACTUAL = LocalDate.now();
 	private static final String SIN_NOMBRE = "Sin nombre";
 	static FileNameExtensionFilter filter = new FileNameExtensionFilter("Binarios", "fec");
 	static JFileChooser jFileChooser = new JFileChooser();
@@ -70,6 +69,7 @@ public class AplicationWindow {
 	 */
 	private void initialize() {
 		frmExamenMayo = new JFrame();
+		frmExamenMayo.setResizable(false);
 		controlarSalida();
 
 		frmExamenMayo.setTitle("Examen Mayo 2017");
@@ -88,7 +88,7 @@ public class AplicationWindow {
 		JMenuItem mntmError = new JMenuItem("Error");
 		mntmError.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(mntmError, "error", "No puedes ser negativo", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(frmExamenMayo, "error", "No puedes ser negativo", JOptionPane.ERROR_MESSAGE);
 			}
 		});
 		mntmError.setMnemonic('e');
@@ -97,7 +97,7 @@ public class AplicationWindow {
 		JMenuItem mntmAdvierte = new JMenuItem("Advierte");
 		mntmAdvierte.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(mntmAdvierte, "Cuidadín", "Esto es una advertencia",
+				JOptionPane.showMessageDialog(frmExamenMayo, "Cuidadín", "Esto es una advertencia",
 						JOptionPane.WARNING_MESSAGE);
 			}
 		});
@@ -107,7 +107,7 @@ public class AplicationWindow {
 		JMenuItem mntmInforma = new JMenuItem("Informa");
 		mntmInforma.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(mntmInforma, "Esto va bien");
+				JOptionPane.showMessageDialog(frmExamenMayo, "Esto va bien");
 			}
 		});
 		mntmInforma.setMnemonic('i');
@@ -132,26 +132,29 @@ public class AplicationWindow {
 			public void actionPerformed(ActionEvent e) {
 				elegirTresOpciones(mntmTresOpciones);
 			}
-			
+
 			/**
-			 * Método que permite elegir una de tres opciones dentro de un JMenuItem
-			 * @param mntmTresOpciones el JMenuItem que contiene las tres opciones
+			 * Método que permite elegir una de tres opciones dentro de un
+			 * JMenuItem
+			 * 
+			 * @param mntmTresOpciones
+			 *            el JMenuItem que contiene las tres opciones
 			 */
 			private void elegirTresOpciones(JMenuItem mntmTresOpciones) {
-				LocalDate fechaActual = FECHA_ACTUAL;
+				LocalDate fechaActual = LocalDate.now();
 				switch (JOptionPane.showConfirmDialog(frmExamenMayo, "¿Quieres saber en qué día vives?",
 						"Seleccionar una opción", JOptionPane.YES_NO_CANCEL_OPTION)) {
 				case JOptionPane.YES_OPTION:
 
-					JOptionPane.showMessageDialog(mntmTresOpciones, "Hoy es " + fechaActual.getDayOfMonth() + " de "
+					JOptionPane.showMessageDialog(frmExamenMayo, "Hoy es " + fechaActual.getDayOfMonth() + " de "
 							+ getMes(fechaActual) + " de " + fechaActual.getYear());
 					return;
 				case JOptionPane.NO_OPTION:
-					JOptionPane.showMessageDialog(mntmTresOpciones,
+					JOptionPane.showMessageDialog(frmExamenMayo,
 							"Pues tú te lo pierdes. Pero que sepas que hoy es " + getDiaDeLaSemana(fechaActual));
 					return;
 				default:
-					JOptionPane.showMessageDialog(mntmTresOpciones, "Cancelado");
+					JOptionPane.showMessageDialog(frmExamenMayo, "Cancelado");
 					return;
 
 				}
@@ -187,9 +190,8 @@ public class AplicationWindow {
 		JMenuItem mntmAbre = new JMenuItem("Abrir");
 		mntmAbre.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				
 				abrir();
-
 			}
 		});
 		mntmAbre.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_MASK));
