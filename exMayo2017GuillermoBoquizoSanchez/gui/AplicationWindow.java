@@ -425,6 +425,7 @@ public class AplicationWindow {
 		return localDate.getMonth().getDisplayName(TextStyle.FULL, Locale.getDefault());
 	}
 
+	
 	/**
 	 * Obtiene el día de la semana según el idioma español de España.
 	 * 
